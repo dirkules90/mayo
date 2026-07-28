@@ -4,17 +4,17 @@
     "name": "Wuppertal (Prolog)",
     "tageGesamt": 1,
     "kundenThema": "Promotion & Aufbruch",
-    "hauptNpc": "doktorvater_prof_winkler",
+    "hauptNpc": "prof_zdrallek",
     "nebenNpcs": ["ramsi_hartmann"],
     "locations": {
       "hoersaal": {
         "name": "Hoersaal der Bergischen Universitaet Wuppertal",
-        "background": null,
+        "background": "assets/backgrounds/wuppertal_hoersaal.jpg",
         "hotspots": [
           {
-            "id": "gespraech_winkler",
+            "id": "gespraech_zdrallek",
             "typ": "dialog",
-            "label": "Mit Prof. Winkler sprechen",
+            "label": "Mit Prof. Zdrallek sprechen",
             "position": { "x": 50, "y": 55 },
             "ziel": "prolog_verteidigung",
             "nachDialog": "phasenende"

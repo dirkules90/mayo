@@ -3,7 +3,7 @@
     "startNode": "n1",
     "nodes": {
       "n1": {
-        "sprecher": "doktorvater_prof_winkler",
+        "sprecher": "prof_zdrallek",
         "text": "Nun, Herr Doktor... ja, ich gewoehne mich noch an den Klang. Ihre Verteidigung war beeindruckend – vor allem der Teil, in dem Sie fuenf Minuten lang das Wort 'Systemdienstleistung' benutzt haben, um Zeit zu schinden.",
         "optionen": [
           {
@@ -13,7 +13,7 @@
           },
           {
             "label": "Ehrlich gesagt hab ich improvisiert.",
-            "effekte": { "reputation": 1, "beziehung:doktorvater_prof_winkler": 2 },
+            "effekte": { "reputation": 1, "beziehung:prof_zdrallek": 2 },
             "naechster": "n2"
           },
           {

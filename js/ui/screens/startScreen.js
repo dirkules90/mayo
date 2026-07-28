@@ -10,6 +10,12 @@ export function initStartScreen(container, onStart) {
     container.hidden = false;
     container.innerHTML = "";
 
+    const heroBild = document.createElement("img");
+    heroBild.className = "start-screen-hero";
+    heroBild.src = "assets/npc/mayo.jpg";
+    heroBild.alt = "Mayo";
+    container.appendChild(heroBild);
+
     const titel = document.createElement("h1");
     titel.textContent = "MAYO – Consulting, Chaos & Champagner";
     container.appendChild(titel);

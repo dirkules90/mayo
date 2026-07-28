@@ -24,10 +24,23 @@ function renderNode(node) {
 
   if (node.sprecher) {
     const sprecher = getNpc(node.sprecher);
+    const speakerRow = document.createElement("div");
+    speakerRow.className = "dialog-speaker-row";
+
+    if (sprecher?.portraitDatei) {
+      const portrait = document.createElement("img");
+      portrait.className = "dialog-portrait";
+      portrait.src = sprecher.portraitDatei;
+      portrait.alt = sprecher.name;
+      speakerRow.appendChild(portrait);
+    }
+
     const name = document.createElement("div");
     name.className = "dialog-speaker";
     name.textContent = sprecher ? sprecher.name : "Unbekannt";
-    containerEl.appendChild(name);
+    speakerRow.appendChild(name);
+
+    containerEl.appendChild(speakerRow);
   }
 
   const text = document.createElement("p");

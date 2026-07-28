@@ -13,6 +13,14 @@
   margin-bottom: 0.5rem;
 }
 
+.start-screen-hero {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--theme-accent, #4a6fa5);
+}
+
 #completion-screen {
   max-width: 640px;
   margin: 10vh auto 0;
