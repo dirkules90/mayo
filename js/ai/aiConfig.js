@@ -1,19 +1,24 @@
 // Aufloesung, welcher KI-Provider aktuell genutzt werden soll.
 //
-// WICHTIG (siehe Lastenheft Kap. 28/32 und Architektur-Entscheidung mit dem
-// Nutzer): Das Spiel ist eine rein statische GitHub-Pages-Seite ohne eigenen
-// Server. Ein Anbieter-Key darf deshalb NIEMALS direkt im Frontend-Code oder
-// Repo liegen - er waere fuer jeden Besucher im Quelltext/Netzwerk-Tab
-// sichtbar. Die gewaehlte Loesung: ein kleiner serverloser Proxy (Cloudflare
-// Worker o.ae.) haelt den echten Key serverseitig als Secret; das Frontend
-// ruft nur die Proxy-URL auf. Wird in Phase 2 implementiert (js/ai/providers/
-// groqProvider.js ruft dann PROXY_URL statt die Anbieter-API direkt auf).
+// Sicherheitsprinzip (Kap. 28/32): Das Spiel ist eine rein statische
+// GitHub-Pages-Seite ohne eigenen Server. Der Groq-API-Key darf deshalb
+// NIEMALS direkt im Frontend-Code oder Repo liegen. Stattdessen ruft das
+// Spiel einen kleinen Cloudflare-Worker-Proxy auf (siehe /worker), der den
+// Key serverseitig als Secret haelt - PROXY_URL unten ist die oeffentliche
+// URL dieses Workers, kein Geheimnis.
 //
-// Bis Phase 2 liefert getProvider() bewusst null zurueck, damit
-// dialogSystem.js/aiChat.js ausschliesslich auf die statischen
-// Fallback-Dialoge zurueckgreifen (Kap. 19.5 - das Spiel muss auch ohne
-// KI-Anbindung vollstaendig funktionsfaehig sein).
+// Solange PROXY_URL leer ist, liefert getProvider() null zurueck, und
+// dialogSystem.js/aiChat.js greifen ausschliesslich auf die statischen
+// Fallback-Dialoge zurueck (Kap. 19.5 - das Spiel bleibt so immer
+// vollstaendig spielbar, auch ohne KI-Anbindung).
+
+import { groqProvider } from "./providers/groqProvider.js";
+
+const PROXY_URL = "";
 
 export function getProvider() {
-  return null;
+  if (!PROXY_URL) {
+    return null;
+  }
+  return groqProvider(PROXY_URL);
 }
