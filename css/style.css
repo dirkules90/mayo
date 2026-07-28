@@ -23,8 +23,11 @@ body {
   min-height: calc(100vh - 2.75rem);
 }
 
+/* !important, da einzelne Screens (z. B. #start-screen) eigene
+   display-Regeln mit hoeherer Spezifitaet (ID-Selektor) setzen, die sonst
+   das hidden-Attribut ueberstimmen wuerden. */
 .screen[hidden] {
-  display: none;
+  display: none !important;
 }
 
 .status-panel {
