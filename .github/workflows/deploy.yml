@@ -19,9 +19,11 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    # Bewusst KEIN "environment: github-pages" gesetzt: GitHub legt dafuer
+    # automatisch eine Deployment-Branch-Regel an, die standardmaessig nur
+    # den Default-Branch (main) zulaesst. Ohne diese Bindung greift keine
+    # Branch-Beschraenkung und der Workflow kann von jedem Branch aus
+    # (z. B. dem aktuellen Feature-Branch) deployen.
     steps:
       - name: Checkout
         uses: actions/checkout@v4
