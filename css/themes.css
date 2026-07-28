@@ -1,0 +1,32 @@
+/* Pro-Stadt Akzentfarben gemäß Lastenheft Kapitel 23. Jede Location-Szene
+   bekommt die Klasse "theme-<levelId>" und erbt die passenden Variablen. */
+
+:root {
+  --theme-accent: #6b7280;
+  --theme-bg: #1f2530;
+}
+
+.theme-wuppertal_prolog {
+  --theme-accent: #8a8f98;
+  --theme-bg: #20242c;
+}
+
+.theme-duesseldorf {
+  --theme-accent: #4a6fa5;
+  --theme-bg: #1c2735;
+}
+
+.theme-hamburg {
+  --theme-accent: #2f9e9e;
+  --theme-bg: #122b30;
+}
+
+.theme-muenchen {
+  --theme-accent: #b8863b;
+  --theme-bg: #2b2116;
+}
+
+.theme-ibiza {
+  --theme-accent: #ef8354;
+  --theme-bg: #2c1b2e;
+}

@@ -1,0 +1,54 @@
+{
+  "prolog_verteidigung": {
+    "startNode": "n1",
+    "nodes": {
+      "n1": {
+        "sprecher": "doktorvater_prof_winkler",
+        "text": "Nun, Herr Doktor... ja, ich gewoehne mich noch an den Klang. Ihre Verteidigung war beeindruckend – vor allem der Teil, in dem Sie fuenf Minuten lang das Wort 'Systemdienstleistung' benutzt haben, um Zeit zu schinden.",
+        "optionen": [
+          {
+            "label": "Ich nenne das strategische Redundanz, Herr Professor.",
+            "effekte": { "reputation": 2 },
+            "naechster": "n2"
+          },
+          {
+            "label": "Ehrlich gesagt hab ich improvisiert.",
+            "effekte": { "reputation": 1, "beziehung:doktorvater_prof_winkler": 2 },
+            "naechster": "n2"
+          },
+          {
+            "typ": "freitext",
+            "fallback": "Mayo grinst und murmelt etwas von einem 'ganzheitlichen Ansatz', was niemanden ueberzeugt, aber auch niemanden stoert.",
+            "naechster": "n2"
+          }
+        ]
+      },
+      "n2": {
+        "sprecher": "ramsi_hartmann",
+        "text": "(SMS) Herr Doktor persoenlich! Die Jungs und ich feiern das heute im Kult – und uebrigens: Morgen frueh geht's fuer dich schon nach Duesseldorf, hab ich gehoert. Also: heute volles Programm, morgen Anzug buegeln.",
+        "optionen": [
+          {
+            "label": "Lieber pack ich schon mal die Koffer, morgen wartet der neue Job.",
+            "effekte": { "reputation": 2, "flag:prolog_seriös": true },
+            "naechster": "n3"
+          },
+          {
+            "label": "Ein Dr. feiert sich nicht selbst, das uebernehmen andere. Bin dabei!",
+            "effekte": { "geld": -30, "beziehung:ramsi_hartmann": 3 },
+            "naechster": "n3"
+          },
+          {
+            "typ": "freitext",
+            "fallback": "Mayo tippt eine wunderbar ausweichende Antwort, die alle Optionen offenlaesst – seine grosse Staerke.",
+            "naechster": "n3"
+          }
+        ]
+      },
+      "n3": {
+        "typ": "ende",
+        "text": "Am naechsten Morgen liegt eine E-Mail im Postfach: 'Willkommen an Bord. Ihr erster Einsatz: Duesseldorf, Montag 9 Uhr, der Kunde erwartet Sie.' Mayo packt den Koffer, richtet die Krawatte – und ahnt noch nicht, wie sehr sich Arbeit und Vergnuegen in den naechsten Wochen die Klinke in die Hand geben werden.",
+        "onEnde": { "flag:prolog_abgeschlossen": true }
+      }
+    }
+  }
+}

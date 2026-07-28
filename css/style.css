@@ -1,0 +1,153 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #0f1115;
+  color: #eef0f3;
+}
+
+#app {
+  position: relative;
+  min-height: 100vh;
+  padding-top: 2.75rem;
+}
+
+.screen {
+  padding: 2rem;
+  min-height: calc(100vh - 2.75rem);
+}
+
+.screen[hidden] {
+  display: none;
+}
+
+.status-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  font-size: 0.9rem;
+}
+
+.status-item {
+  white-space: nowrap;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  background: var(--theme-accent, #4a6fa5);
+  color: #fff;
+}
+
+button:hover {
+  filter: brightness(1.1);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.scene {
+  position: relative;
+  min-height: 60vh;
+  border-radius: 12px;
+  background-color: var(--theme-bg, #1c2735);
+  background-size: cover;
+  background-position: center;
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+.scene-title {
+  margin: 0 0 1rem;
+  font-size: 1.4rem;
+}
+
+.hotspot-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.dialog-box {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  max-height: 60vh;
+  overflow-y: auto;
+  background: #151922;
+  border-top: 2px solid var(--theme-accent, #4a6fa5);
+  padding: 1.25rem 1.5rem 1.75rem;
+}
+
+.dialog-box[hidden] {
+  display: none;
+}
+
+.dialog-speaker {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: var(--theme-accent, #8fb3e8);
+}
+
+.dialog-text {
+  margin: 0 0 0.75rem;
+  line-height: 1.4;
+}
+
+.dialog-text--fallback {
+  font-style: italic;
+  opacity: 0.85;
+}
+
+.dialog-optionen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.dialog-option-btn {
+  flex: 1 1 auto;
+  text-align: left;
+}
+
+.dialog-freitext {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.dialog-freitext input {
+  flex: 1;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: #0f1115;
+  color: #eef0f3;
+}

@@ -1,0 +1,26 @@
+#start-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  max-width: 640px;
+  margin: 0 auto;
+  padding-top: 15vh;
+}
+
+#start-screen h1 {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+#completion-screen {
+  max-width: 640px;
+  margin: 10vh auto 0;
+  text-align: center;
+}
+
+#completion-screen p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
