@@ -17,6 +17,11 @@
             "naechster": "n2"
           },
           {
+            "label": "Wenn ich ehrlich bin, war ich waehrend der Verteidigung leicht angetrunken – hat wohl geholfen.",
+            "effekte": { "reputation": -1, "beziehung:prof_zdrallek": 3 },
+            "naechster": "n2"
+          },
+          {
             "typ": "freitext",
             "fallback": "Mayo grinst und murmelt etwas von einem 'ganzheitlichen Ansatz', was niemanden ueberzeugt, aber auch niemanden stoert.",
             "naechster": "n2"
