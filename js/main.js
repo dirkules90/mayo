@@ -13,7 +13,8 @@ import { initCompletionScreen } from "./ui/screens/completionScreen.js";
 import { initDialogBox } from "./ui/components/dialogBox.js";
 import { initPhoneScreen, oeffnePhone } from "./ui/screens/phoneScreen.js";
 import { initPhoneNotification } from "./ui/components/phoneNotification.js";
-import { empfangeNachricht } from "./engine/phoneSystem.js";
+import { empfangeNachricht, gesamtUngelesen } from "./engine/phoneSystem.js";
+import { initQuizOverlay } from "./ui/components/quizOverlay.js";
 
 async function main() {
   await loadAllContent();
@@ -26,13 +27,16 @@ async function main() {
   const dialogBoxEl = document.getElementById("dialog-box");
   const phoneScreenEl = document.getElementById("phone-screen");
   const phoneIconBtn = document.getElementById("phone-icon-btn");
+  const phoneBadgeEl = document.getElementById("phone-badge");
   const phoneToastContainerEl = document.getElementById("phone-toast-container");
+  const quizOverlayEl = document.getElementById("quiz-overlay");
 
   initStatusPanel(statusPanelEl);
   initDialogBox(dialogBoxEl);
   initSceneScreen(sceneScreenEl);
   initPhoneScreen(phoneScreenEl);
   initPhoneNotification(phoneToastContainerEl, (npcId) => oeffnePhone(npcId));
+  initQuizOverlay(quizOverlayEl);
   const zeigeCompletion = initCompletionScreen(completionScreenEl);
 
   initMapScreen(mapScreenEl, (locationId) => {
@@ -41,6 +45,12 @@ async function main() {
   });
 
   phoneIconBtn.addEventListener("click", () => oeffnePhone());
+
+  on("state:changed", () => {
+    const anzahl = gesamtUngelesen();
+    phoneBadgeEl.hidden = anzahl === 0;
+    phoneBadgeEl.textContent = anzahl > 9 ? "9+" : String(anzahl);
+  });
 
   on("karte:betreten", () => {
     const state = getState();

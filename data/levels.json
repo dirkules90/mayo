@@ -31,10 +31,26 @@
     "hauptNpc": "jasmin_vogt",
     "nebenNpcs": ["ramsi_hartmann", "kevin_brandt"],
     "karte": {
-      "background": "assets/backgrounds/duesseldorf_karte.jpg",
       "startPosition": { "x": 2, "y": 8 },
       "breiteInTiles": 16,
       "hoeheInTiles": 10,
+      "tileArt": {
+        "g": "assets/tiles/gras.jpg",
+        "w": "assets/tiles/weg.jpg",
+        "r": "assets/tiles/wasser.jpg"
+      },
+      "tiles": [
+        "rrrrrrrrrrrrrrrr",
+        "rrrrrrrrrrrrrrrr",
+        "ggggggggggggwggg",
+        "gggwggggggggwggg",
+        "gggwggggggggwggg",
+        "gggwggggggggwggg",
+        "gggwggwgggggwggg",
+        "ggwwwwwwwwwwwwgg",
+        "gggggggggggggwwg",
+        "ggggggggggggggwg"
+      ],
       "landmarks": [
         { "id": "hotel", "name": "Hotel", "emoji": "🏨", "position": { "x": 2, "y": 7 }, "ziel": "hotel" },
         { "id": "buero", "name": "Buero des Kunden", "emoji": "🏢", "position": { "x": 12, "y": 2 }, "ziel": "buero_kunde" },

@@ -22,3 +22,10 @@ export function getProvider() {
   }
   return groqProvider(PROXY_URL);
 }
+
+// Fuer Faelle, die nicht ueber das NPC-Persona-Interface laufen (z. B. das
+// Quizfragen-Generator, siehe engine/quizGenerator.js), aber trotzdem den
+// Proxy direkt ansprechen wollen.
+export function getProxyUrl() {
+  return PROXY_URL || null;
+}

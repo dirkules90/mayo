@@ -33,10 +33,28 @@ export function empfangeNachricht(npcId, text) {
   const historie = state.npcChatHistory[npcId] ?? [];
   historie.push({ role: "assistant", content: text });
   state.npcChatHistory[npcId] = historie.slice(-10);
+  state.ungeleseneNachrichten[npcId] = (state.ungeleseneNachrichten[npcId] ?? 0) + 1;
   notifyStateChanged();
 
   const npc = getNpc(npcId);
   emit("phone:neue_nachricht", { npcId, npcName: npc?.name ?? "Unbekannt", text });
+}
+
+// Setzt die ungelesenen Nachrichten eines Kontakts zurueck (beim Oeffnen
+// seines Chatverlaufs).
+export function markiereAlsGelesen(npcId) {
+  const state = getState();
+  if (state.ungeleseneNachrichten[npcId]) {
+    state.ungeleseneNachrichten[npcId] = 0;
+    notifyStateChanged();
+  }
+}
+
+// Summe aller ungelesenen Nachrichten ueber alle Kontakte - fuer das
+// Zaehler-Badge am Handy-Icon (Nutzer-Wunsch).
+export function gesamtUngelesen() {
+  const state = getState();
+  return Object.values(state.ungeleseneNachrichten).reduce((summe, wert) => summe + wert, 0);
 }
 
 // Spieler schreibt einem Kontakt - laeuft ueber dieselbe KI-Anbindung wie

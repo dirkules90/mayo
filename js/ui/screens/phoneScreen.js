@@ -4,8 +4,9 @@
 
 import { getState } from "../../state/gameState.js";
 import { getNpc } from "../../state/contentStore.js";
-import { sendeNachricht } from "../../engine/phoneSystem.js";
+import { sendeNachricht, markiereAlsGelesen } from "../../engine/phoneSystem.js";
 import { on } from "../../state/eventBus.js";
+import { starteAuftragsAnfrage } from "../components/quizOverlay.js";
 
 let containerEl = null;
 let offenerKontaktId = null;
@@ -27,6 +28,9 @@ export function initPhoneScreen(container) {
 export function oeffnePhone(kontaktIdZumOeffnen = null) {
   containerEl.hidden = false;
   offenerKontaktId = kontaktIdZumOeffnen;
+  if (offenerKontaktId) {
+    markiereAlsGelesen(offenerKontaktId);
+  }
   render();
 }
 
@@ -111,8 +115,17 @@ function renderKontaktliste() {
     name.textContent = npc.name;
     eintrag.appendChild(name);
 
+    const ungelesen = state.ungeleseneNachrichten[npcId];
+    if (ungelesen > 0) {
+      const badge = document.createElement("span");
+      badge.className = "phone-kontakt-badge";
+      badge.textContent = ungelesen > 9 ? "9+" : String(ungelesen);
+      eintrag.appendChild(badge);
+    }
+
     eintrag.addEventListener("click", () => {
       offenerKontaktId = npcId;
+      markiereAlsGelesen(npcId);
       render();
     });
     inhalt.appendChild(eintrag);
@@ -126,6 +139,15 @@ function renderThread(npcId) {
 
   const state = getState();
   const historie = state.npcChatHistory[npcId] ?? [];
+
+  const npc = getNpc(npcId);
+  if (npc?.bietetAuftraege) {
+    const auftragBtn = document.createElement("button");
+    auftragBtn.className = "phone-auftrag-btn";
+    auftragBtn.textContent = "💼 Nach einem Auftrag fragen";
+    auftragBtn.addEventListener("click", () => starteAuftragsAnfrage());
+    inhalt.appendChild(auftragBtn);
+  }
 
   const verlauf = document.createElement("div");
   verlauf.className = "phone-verlauf";

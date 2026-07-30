@@ -1,0 +1,77 @@
+[
+  {
+    "frage": "Wofuer steht die Abkuerzung 'EEG' im deutschen Energiekontext?",
+    "optionen": [
+      "Erneuerbare-Energien-Gesetz",
+      "Elektro-Energie-Gremium",
+      "Europaeische Energie-Gruppe",
+      "Energie-Einspar-Grundlage"
+    ],
+    "richtigIndex": 0
+  },
+  {
+    "frage": "Welches Bauteil sorgt im Verteilnetz dafuer, dass Mittelspannung auf Haushaltsspannung heruntertransformiert wird?",
+    "optionen": ["Trafostation", "Wechselrichter", "Blindleistungskompensator", "Erdungsschalter"],
+    "richtigIndex": 0
+  },
+  {
+    "frage": "Was beschreibt der Begriff 'Sektorkopplung' in der Energiewende am treffendsten?",
+    "optionen": [
+      "Die Vernetzung von Strom-, Waerme- und Verkehrssektor",
+      "Die Aufteilung eines Stromnetzes in Sektoren",
+      "Eine Foerderrichtlinie fuer Solaranlagen",
+      "Ein Vertragsmodell zwischen Netzbetreibern"
+    ],
+    "richtigIndex": 0
+  },
+  {
+    "frage": "Welche Technologie wird typischerweise genutzt, um ueberschuessigen Windstrom zwischenzuspeichern?",
+    "optionen": [
+      "Batteriespeicher / Pumpspeicherkraftwerke",
+      "Dieselgeneratoren",
+      "Gasturbinen im Dauerbetrieb",
+      "Kondensatoren im Hausanschluss"
+    ],
+    "richtigIndex": 0
+  },
+  {
+    "frage": "Was ist ein 'Netzengpass'?",
+    "optionen": [
+      "Ein Abschnitt im Stromnetz, der nicht genug Kapazitaet fuer die anfallende Leistung hat",
+      "Ein Firmenparkplatz mit zu wenig Ladesaeulen",
+      "Eine gesetzliche Obergrenze fuer Solaranlagen",
+      "Ein Software-Fehler in der Abrechnung"
+    ],
+    "richtigIndex": 0
+  },
+  {
+    "frage": "Was versteht man unter 'Redispatch' im Stromnetz?",
+    "optionen": [
+      "Kurzfristiges Eingreifen in die Kraftwerkseinspeisung, um Netzengpaesse zu vermeiden",
+      "Den Neuversand einer Stromrechnung",
+      "Die jaehrliche Wartung eines Umspannwerks",
+      "Ein Vertriebskonzept fuer Gruenstrom-Tarife"
+    ],
+    "richtigIndex": 0
+  },
+  {
+    "frage": "Welcher Anschlusstyp verbindet Offshore-Windparks meist mit dem Festland?",
+    "optionen": [
+      "Seekabel (HGUE/HGÜ-Verbindung)",
+      "Freileitung ueber Bruecken",
+      "Satellitenfunk",
+      "Oberirdische Trassen durch Naturschutzgebiete"
+    ],
+    "richtigIndex": 0
+  },
+  {
+    "frage": "Welches Consulting-Buzzword passt am besten zu 'wir digitalisieren das Verteilnetz'?",
+    "optionen": [
+      "Smart-Grid-Transformation",
+      "Synergetische Kaffeepause",
+      "Holistisches Blindleistungs-Storytelling",
+      "Agile Kabeltrommel-Rotation"
+    ],
+    "richtigIndex": 0
+  }
+]

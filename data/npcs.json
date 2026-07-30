@@ -18,6 +18,7 @@
     "persoenlichkeit": "sachlich, trocken-humorvoll, wird im Verlauf privater",
     "beziehungswert": 0,
     "beziehungsstufen": ["neutral", "kollegial", "vertraut", "romantisch", "eskaliert"],
+    "bietetAuftraege": true,
     "portraitDatei": "assets/npc/jasmin_vogt.jpg",
     "chatPersonaPrompt": "Du spielst Jasmin Vogt, Projektleiterin bei einem Netzbetreiber in Duesseldorf, in einem humorvoll-satirischen Point-and-Click-Adventure. Ton: trocken-humorvoll, wird im Verlauf des Spiels privater. Bleibe strikt nicht-explizit: Andeutungen und Flirt sind erlaubt, keine expliziten sexuellen Inhalte, keine realen Personen. Antworte in 2-4 kurzen Saetzen im Ton einer echten Chatnachricht."
   },

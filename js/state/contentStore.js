@@ -7,6 +7,7 @@ const content = {
   levels: null,
   items: null,
   endings: null,
+  quizfragen: null,
   dialogues: {}, // keyed nach Level-/Stadt-ID
 };
 
@@ -19,16 +20,18 @@ async function fetchJson(pfad) {
 }
 
 export async function loadAllContent() {
-  const [npcs, levels, items, endings] = await Promise.all([
+  const [npcs, levels, items, endings, quizfragen] = await Promise.all([
     fetchJson("data/npcs.json"),
     fetchJson("data/levels.json"),
     fetchJson("data/items.json"),
     fetchJson("data/endings.json"),
+    fetchJson("data/quizfragen.json"),
   ]);
   content.npcs = npcs;
   content.levels = levels;
   content.items = items;
   content.endings = endings;
+  content.quizfragen = quizfragen;
   return content;
 }
 

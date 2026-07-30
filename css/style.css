@@ -206,9 +206,19 @@ button:disabled {
   position: relative;
   min-height: 70vh;
   border-radius: 12px;
+  overflow: hidden;
+  background: #1c2735;
+}
+
+.map-terrain {
+  position: absolute;
+  inset: 0;
+  display: grid;
+}
+
+.map-tile {
   background-size: cover;
   background-position: center;
-  overflow: hidden;
 }
 
 .map-layer {
@@ -278,6 +288,42 @@ button:disabled {
 
 .phone-icon-btn[hidden] {
   display: none;
+}
+
+.phone-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  border-radius: 10px;
+  background: #e6493f;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phone-badge[hidden] {
+  display: none;
+}
+
+.phone-kontakt-badge {
+  margin-left: auto;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 4px;
+  border-radius: 10px;
+  background: #e6493f;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .phone-toast {
@@ -384,4 +430,96 @@ button:disabled {
   flex-direction: column;
   max-height: 40vh;
   overflow-y: auto;
+}
+
+.phone-kontakt-badge {
+  margin-left: auto;
+}
+
+.phone-auftrag-btn {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--theme-accent, #4a6fa5);
+}
+
+/* Nebenauftrags-Quiz-Overlay (Kap. 18, Nutzer-Wunsch) */
+
+.quiz-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.quiz-overlay[hidden] {
+  display: none;
+}
+
+.quiz-box {
+  width: min(420px, calc(100vw - 2rem));
+  max-height: 80vh;
+  overflow-y: auto;
+  background: #151922;
+  border: 2px solid var(--theme-accent, #4a6fa5);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.quiz-box h3 {
+  margin: 0;
+}
+
+.quiz-schwierigkeit-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  text-align: left;
+}
+
+.quiz-schwierigkeit-btn span {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.quiz-fortschritt {
+  font-size: 0.85rem;
+  opacity: 0.75;
+  margin: 0;
+}
+
+.quiz-frage-text {
+  font-size: 1.05rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.quiz-optionen {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quiz-option-btn {
+  text-align: left;
+}
+
+.quiz-option--richtig {
+  background: #3d9a5c !important;
+}
+
+.quiz-option--falsch {
+  background: #b3413a !important;
+}
+
+.quiz-schliessen-btn {
+  align-self: flex-end;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
