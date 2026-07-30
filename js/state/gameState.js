@@ -19,6 +19,8 @@ function erzeugeStandardState() {
     inventar: [],
     npcBeziehungen: {},
     npcChatHistory: {},
+    kontakte: [],
+    kartenPosition: null,
     levelFortschritt: {},
     eventFlags: {},
     currentEnding: null,
@@ -54,4 +56,14 @@ export function hasFlag(flagName) {
 
 export function notifyStateChanged() {
   emit("state:changed", state);
+}
+
+// Zentraler Level-Wechsel (z. B. Prolog -> Duesseldorf): setzt Level, Tag
+// und Slot zurueck und informiert alle Module.
+export function wechsleLevel(neuesLevelId, startTag = 1, startSlot = "vormittag") {
+  state.aktuellesLevel = neuesLevelId;
+  state.aktuellerTag = startTag;
+  state.aktuellerSlot = startSlot;
+  emit("state:changed", state);
+  emit("level:gewechselt", neuesLevelId);
 }

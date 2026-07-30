@@ -3,12 +3,13 @@
 // Dieselbe Engine wird spaeter fuer alle Staedte/NPCs wiederverwendet -
 // neue Dialoge sind reine Content-Aenderungen in data/dialogues/*.json.
 
-import { getContent, getNpc } from "../state/contentStore.js";
-import { addReputation, addGeld, spendGeld } from "../engine/economy.js";
+import { getContent, getNpc, getItem } from "../state/contentStore.js";
+import { addReputation, addGeld, spendGeld, buyItem } from "../engine/economy.js";
 import { changeBeziehungswert } from "../engine/relationships.js";
 import { setFlag } from "../state/gameState.js";
 import { emit } from "../state/eventBus.js";
 import { requestAiReply } from "./aiChat.js";
+import { fuegeKontaktHinzu } from "../engine/phoneSystem.js";
 
 let aktiverBaum = null;
 let aktiveNode = null;
@@ -131,12 +132,25 @@ export function bestaetigeEnde() {
   beendeDialog();
 }
 
-// Generischer "Kauf"-Node (z. B. Promotionsfeier, spaeter Shop-Items):
-// zieht den Preis vom liquiden Geld ab und geht erst bei Erfolg weiter
-// (Kap. 13 Bankrott-Mechanik - reicht das Geld nicht, bleibt der Spieler
-// auf dem Node stehen).
+// Generischer "Kauf"-Node: Mit "itemId" verbucht er Vermoegen/Status ueber
+// economy.buyItem (Kap. 16 Shop-System), ohne itemId zieht er nur den Preis
+// vom liquiden Geld ab (z. B. Promotionsfeier, ein reines Erlebnis ohne
+// Vermoegenswert). Reicht das Geld nicht, bleibt der Spieler auf dem Node
+// stehen (Kap. 13 Bankrott-Mechanik).
 export function bestaetigeKauf() {
   const node = aktiveNode;
+
+  if (node.itemId) {
+    const item = getItem(node.itemId);
+    const erfolgreich = buyItem(item);
+    if (!erfolgreich) {
+      emit("dialog:kauf_fehlgeschlagen", item.preis);
+      return;
+    }
+    geheWeiterZu(node.naechster);
+    return;
+  }
+
   const erfolgreich = spendGeld(node.preis);
   if (!erfolgreich) {
     emit("dialog:kauf_fehlgeschlagen", node.preis);
@@ -163,6 +177,8 @@ function wendeEffekteAn(effekte = {}) {
       changeBeziehungswert(schluessel.split(":")[1], wert);
     } else if (schluessel.startsWith("flag:")) {
       setFlag(schluessel.split(":")[1], Boolean(wert));
+    } else if (schluessel.startsWith("kontakt:")) {
+      fuegeKontaktHinzu(schluessel.split(":")[1]);
     }
   }
 }

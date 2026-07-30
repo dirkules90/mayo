@@ -1,1 +1,29 @@
-[]
+[
+  {
+    "id": "uhr_einstieg_zeitwerk",
+    "name": "Einstiegsuhr \"Zeitwerk Classic\"",
+    "kategorie": "uhr",
+    "preis": 450,
+    "vermoegenswert": 450,
+    "statusBonus": 4,
+    "verfuegbarAb": "duesseldorf"
+  },
+  {
+    "id": "uhr_mittel_zeitwerk",
+    "name": "Chronograph \"Zeitwerk Regatta\"",
+    "kategorie": "uhr",
+    "preis": 1800,
+    "vermoegenswert": 1800,
+    "statusBonus": 10,
+    "verfuegbarAb": "duesseldorf"
+  },
+  {
+    "id": "auto_gebraucht_yalcin",
+    "name": "Gebrauchter Mittelklassewagen (Deniz Yalcin Automobile)",
+    "kategorie": "fahrzeug",
+    "preis": 22000,
+    "vermoegenswert": 22000,
+    "statusBonus": 8,
+    "verfuegbarAb": "duesseldorf"
+  }
+]

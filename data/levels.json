@@ -22,5 +22,128 @@
         ]
       }
     }
+  },
+  {
+    "id": "duesseldorf",
+    "name": "Duesseldorf",
+    "tageGesamt": 5,
+    "kundenThema": "Netzausbau & Verteilnetz-Digitalisierung",
+    "hauptNpc": "jasmin_vogt",
+    "nebenNpcs": ["ramsi_hartmann", "kevin_brandt"],
+    "karte": {
+      "background": "assets/backgrounds/duesseldorf_karte.jpg",
+      "startPosition": { "x": 2, "y": 8 },
+      "breiteInTiles": 16,
+      "hoeheInTiles": 10,
+      "landmarks": [
+        { "id": "hotel", "name": "Hotel", "emoji": "🏨", "position": { "x": 2, "y": 7 }, "ziel": "hotel" },
+        { "id": "buero", "name": "Buero des Kunden", "emoji": "🏢", "position": { "x": 12, "y": 2 }, "ziel": "buero_kunde" },
+        { "id": "altstadt", "name": "Altstadt-Bar", "emoji": "🍻", "position": { "x": 6, "y": 6 }, "ziel": "altstadt_bar" },
+        { "id": "zeitwerk", "name": "Zeitwerk Duesseldorf", "emoji": "⌚", "position": { "x": 9, "y": 7 }, "ziel": "shop_zeitwerk" },
+        { "id": "autohaendler", "name": "Deniz Yalcin Automobile", "emoji": "🚗", "position": { "x": 13, "y": 7 }, "ziel": "autohaendler" },
+        { "id": "rheinufer", "name": "Rheinufer", "emoji": "🌊", "position": { "x": 3, "y": 3 }, "ziel": "rheinufer" },
+        { "id": "flughafen", "name": "Flughafen", "emoji": "✈️", "position": { "x": 14, "y": 9 }, "ziel": "flughafen" }
+      ]
+    },
+    "locations": {
+      "hotel": {
+        "name": "Hotelzimmer",
+        "background": "assets/backgrounds/duesseldorf_hotel.jpg",
+        "hotspots": [
+          { "id": "zur_karte", "typ": "karte", "label": "Zurueck zur Stadt", "position": { "x": 50, "y": 90 } }
+        ]
+      },
+      "buero_kunde": {
+        "name": "Buero des Kunden - Rheinnetz Duesseldorf GmbH",
+        "background": "assets/backgrounds/duesseldorf_buero.jpg",
+        "hotspots": [
+          {
+            "id": "jasmin_treffen",
+            "typ": "dialog",
+            "label": "Jasmin Vogt ansprechen",
+            "position": { "x": 50, "y": 55 },
+            "ziel": "jasmin_erstkontakt"
+          },
+          { "id": "zur_karte", "typ": "karte", "label": "Zurueck zur Stadt", "position": { "x": 50, "y": 90 } }
+        ]
+      },
+      "altstadt_bar": {
+        "name": "Altstadt-Bar",
+        "background": "assets/backgrounds/duesseldorf_altstadt_bar.jpg",
+        "hotspots": [
+          {
+            "id": "kevin_treffen",
+            "typ": "dialog",
+            "label": "Den Typen an der Bar ansprechen",
+            "position": { "x": 50, "y": 55 },
+            "ziel": "kevin_erstkontakt"
+          },
+          { "id": "zur_karte", "typ": "karte", "label": "Zurueck zur Stadt", "position": { "x": 50, "y": 90 } }
+        ]
+      },
+      "shop_zeitwerk": {
+        "name": "Zeitwerk Duesseldorf - Uhren & Accessoires",
+        "background": null,
+        "hotspots": [
+          {
+            "id": "uhr_einstieg_kaufen",
+            "typ": "dialog",
+            "label": "Zeitwerk Classic ansehen (450 €)",
+            "position": { "x": 30, "y": 55 },
+            "ziel": "kauf_uhr_einstieg"
+          },
+          {
+            "id": "uhr_mittel_kaufen",
+            "typ": "dialog",
+            "label": "Zeitwerk Regatta ansehen (1.800 €)",
+            "position": { "x": 70, "y": 55 },
+            "ziel": "kauf_uhr_mittel"
+          },
+          { "id": "zur_karte", "typ": "karte", "label": "Zurueck zur Stadt", "position": { "x": 50, "y": 90 } }
+        ]
+      },
+      "autohaendler": {
+        "name": "Deniz Yalcin Automobile",
+        "background": null,
+        "hotspots": [
+          {
+            "id": "auto_kaufen",
+            "typ": "dialog",
+            "label": "Gebrauchten Mittelklassewagen ansehen (22.000 €)",
+            "position": { "x": 50, "y": 55 },
+            "ziel": "kauf_auto"
+          },
+          { "id": "zur_karte", "typ": "karte", "label": "Zurueck zur Stadt", "position": { "x": 50, "y": 90 } }
+        ]
+      },
+      "rheinufer": {
+        "name": "Rheinufer",
+        "background": "assets/backgrounds/duesseldorf_rheinufer.jpg",
+        "hotspots": [
+          {
+            "id": "spazieren",
+            "typ": "dialog",
+            "label": "Am Ufer entlanglaufen",
+            "position": { "x": 50, "y": 55 },
+            "ziel": "rheinufer_spaziergang"
+          },
+          { "id": "zur_karte", "typ": "karte", "label": "Zurueck zur Stadt", "position": { "x": 50, "y": 90 } }
+        ]
+      },
+      "flughafen": {
+        "name": "Flughafen Duesseldorf",
+        "background": null,
+        "hotspots": [
+          {
+            "id": "abflug_versuchen",
+            "typ": "dialog",
+            "label": "Abflug versuchen",
+            "position": { "x": 50, "y": 55 },
+            "ziel": "flughafen_blockiert"
+          },
+          { "id": "zur_karte", "typ": "karte", "label": "Zurueck zur Stadt", "position": { "x": 50, "y": 90 } }
+        ]
+      }
+    }
   }
 ]

@@ -28,8 +28,14 @@ export function groqProvider(proxyUrl) {
   };
 }
 
+// Globale Kuerze-Regel: gilt fuer JEDE KI-Antwort im gesamten Spiel, egal
+// welche NPC-Persona gerade spricht - unabhaengig davon, was im einzelnen
+// chatPersonaPrompt steht.
+const KUERZE_REGEL =
+  "Halte dich unbedingt kurz: maximal 2-3 kurze Saetze, wie eine echte Chat-Nachricht. Keine langen Absaetze.";
+
 function baueSystemPrompt(npc, konversationsKontext) {
-  let prompt = npc.chatPersonaPrompt;
+  let prompt = `${npc.chatPersonaPrompt}\n\n${KUERZE_REGEL}`;
 
   if (konversationsKontext) {
     const { gespraechsziel, aktuelleRunde, maxAustausche, istLetzteRunde } = konversationsKontext;

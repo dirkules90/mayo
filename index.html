@@ -10,13 +10,17 @@
 </head>
 <body>
   <div id="status-panel" class="status-panel"></div>
+  <button id="phone-icon-btn" class="phone-icon-btn" hidden>📱</button>
+  <div id="phone-toast-container"></div>
 
   <main id="app">
     <section id="start-screen" class="screen"></section>
+    <section id="map-screen" class="screen" hidden></section>
     <section id="scene-screen" class="screen" hidden></section>
     <section id="completion-screen" class="screen" hidden></section>
   </main>
 
+  <div id="phone-screen" class="phone-screen" hidden></div>
   <div id="dialog-box" class="dialog-box" hidden></div>
 
   <script type="module" src="js/main.js"></script>

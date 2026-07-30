@@ -35,5 +35,8 @@ function handleHotspot(hotspot) {
     });
   } else if (hotspot.typ === "reise") {
     zeigeLocation(hotspot.ziel);
+  } else if (hotspot.typ === "karte") {
+    sceneContainer.hidden = true;
+    emit("karte:betreten");
   }
 }

@@ -199,3 +199,189 @@ button:disabled {
   background: #0f1115;
   color: #eef0f3;
 }
+
+/* Begehbare Stadtkarte (Kap. 20.1, Pokemon-Stil-Wunsch des Nutzers) */
+
+.map-screen {
+  position: relative;
+  min-height: 70vh;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.map-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.map-landmark {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  background: rgba(15, 17, 21, 0.75);
+  border-radius: 10px;
+  padding: 0.4rem 0.6rem;
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.map-landmark-emoji {
+  font-size: 1.4rem;
+}
+
+.map-landmark-label {
+  font-size: 0.7rem;
+  white-space: nowrap;
+}
+
+.map-mayo-token {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  border: 2px solid #fff;
+  transition: left 0.15s ease, top 0.15s ease;
+  pointer-events: none;
+}
+
+.map-hinweis {
+  position: relative;
+  margin: 0.75rem 0 0;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  text-align: center;
+}
+
+/* Handy/Kontakte-System (Nutzer-Wunsch, GTA-artiges Popup + Vollansicht) */
+
+.phone-icon-btn {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 25;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.phone-icon-btn[hidden] {
+  display: none;
+}
+
+.phone-toast {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  position: fixed;
+  top: 4rem;
+  right: 1rem;
+  z-index: 40;
+  max-width: 260px;
+  background: #1c2735;
+  color: #fff;
+  border: 2px solid var(--theme-accent, #4a6fa5);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  font-size: 0.85rem;
+  animation: phone-toast-in 0.25s ease-out;
+}
+
+@keyframes phone-toast-in {
+  from {
+    transform: translateX(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.phone-screen {
+  position: fixed;
+  right: 1rem;
+  bottom: 5.5rem;
+  z-index: 35;
+  width: min(360px, calc(100vw - 2rem));
+  max-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  background: #151922;
+  border: 2px solid var(--theme-accent, #4a6fa5);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.phone-screen[hidden] {
+  display: none;
+}
+
+.phone-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.phone-header h3 {
+  margin: 0;
+  font-size: 1rem;
+  flex: 1;
+}
+
+.phone-icon-nav-btn {
+  background: transparent;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+}
+
+.phone-inhalt {
+  padding: 0.75rem 1rem 1rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.phone-hinweis {
+  opacity: 0.75;
+  font-size: 0.9rem;
+}
+
+.phone-kontakt-eintrag {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255, 255, 255, 0.05);
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+}
+
+.phone-kontakt-eintrag img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.phone-verlauf {
+  display: flex;
+  flex-direction: column;
+  max-height: 40vh;
+  overflow-y: auto;
+}

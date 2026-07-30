@@ -1,0 +1,138 @@
+{
+  "jasmin_erstkontakt": {
+    "startNode": "n1",
+    "nodes": {
+      "n1": {
+        "sprecher": "jasmin_vogt",
+        "text": "Sie muessen der neue Consultant sein. Dr. Mayo, richtig? Ich hoffe, Sie haben mehr drauf als nur den Titel auf der Visitenkarte.",
+        "gespraechsziel": "Jasmin ist sachlich-trocken-humorvoll und testet Mayo zunaechst ein wenig, bevor sie zum eigentlichen Auftrag (Netzausbau und Verteilnetz-Digitalisierung fuer Rheinnetz Duesseldorf) ueberleitet. Nach insgesamt drei Antworten des Spielers soll sie professionell zum Projektstart ueberleiten.",
+        "maxAustausche": 3,
+        "fallback": "Jasmin nickt knapp und reicht Mayo einen Ordner mit den ersten Unterlagen.",
+        "naechster": "n_ende",
+        "optionen": [
+          {
+            "label": "Titel ist nur Papier, Frau Vogt - ueberzeugen Sie sich selbst.",
+            "effekte": { "reputation": 2, "beziehung:jasmin_vogt": 1 }
+          },
+          {
+            "label": "Ich habe an der Bergischen Universitaet promoviert, das war kein Zuckerschlecken.",
+            "effekte": { "reputation": 1 }
+          },
+          {
+            "typ": "freitext",
+            "fallback": "Mayo laechelt selbstbewusst und weicht der Frage elegant aus."
+          }
+        ]
+      },
+      "n_ende": {
+        "typ": "ende",
+        "text": "Jasmin nickt zufrieden. 'Willkommen im Projekt, Herr Doktor. Legen wir los - der Netzausbau wartet nicht auf uns.'",
+        "onEnde": { "kontakt:jasmin_vogt": true, "flag:duesseldorf_teilaufgabe1_gestartet": true }
+      }
+    }
+  },
+  "kevin_erstkontakt": {
+    "startNode": "n1",
+    "nodes": {
+      "n1": {
+        "sprecher": "kevin_brandt",
+        "text": "Na, neu hier? Du siehst aus, als koenntest du ein Bier gebrauchen! Ich bin Kevin, ich kenn hier jeden, der jemand ist.",
+        "gespraechsziel": "Kevin ist locker, feierwuetig, will Mayo ins Duesseldorfer Nachtleben einfuehren und erzaehlt gerne launige Geschichten. Nach insgesamt drei Antworten des Spielers soll er Mayo herzlich einladen, oefter vorbeizukommen, und sich launig verabschieden.",
+        "maxAustausche": 3,
+        "fallback": "Kevin lacht, klopft Mayo auf die Schulter und verschwindet Richtung Tanzflaeche.",
+        "naechster": "n_ende",
+        "optionen": [
+          {
+            "label": "Ein Bier waere jetzt echt nicht schlecht.",
+            "effekte": { "beziehung:kevin_brandt": 2 }
+          },
+          {
+            "label": "Ich bin eigentlich nur kurz hier, viel Arbeit morgen.",
+            "effekte": { "reputation": 1 }
+          },
+          {
+            "typ": "freitext",
+            "fallback": "Mayo grinst zurueck und laesst sich auf das Gespraech ein."
+          }
+        ]
+      },
+      "n_ende": {
+        "typ": "ende",
+        "text": "Kevin drueckt Mayo im Rausgehen noch seine Nummer in die Hand. 'Meld dich, wenn's mal wieder krachen soll!'",
+        "onEnde": { "kontakt:kevin_brandt": true }
+      }
+    }
+  },
+  "kauf_uhr_einstieg": {
+    "startNode": "start",
+    "nodes": {
+      "start": {
+        "typ": "kauf",
+        "text": "Der Verkaeufer praesentiert die Zeitwerk Classic - dezent, aber mit Format.",
+        "kaufLabel": "Zeitwerk Classic kaufen",
+        "kaufEmoji": "⌚",
+        "preis": 450,
+        "itemId": "uhr_einstieg_zeitwerk",
+        "naechster": "n_ende"
+      },
+      "n_ende": {
+        "typ": "ende",
+        "text": "Die Uhr sitzt gut am Handgelenk. Ein kleiner, aber spuerbarer Statusgewinn."
+      }
+    }
+  },
+  "kauf_uhr_mittel": {
+    "startNode": "start",
+    "nodes": {
+      "start": {
+        "typ": "kauf",
+        "text": "Der Zeitwerk Regatta glaenzt im Schaufensterlicht - deutlich mehr Uhr fuers Geld, im wahrsten Sinne.",
+        "kaufLabel": "Zeitwerk Regatta kaufen",
+        "kaufEmoji": "⌚",
+        "preis": 1800,
+        "itemId": "uhr_mittel_zeitwerk",
+        "naechster": "n_ende"
+      },
+      "n_ende": {
+        "typ": "ende",
+        "text": "Mayo betrachtet sein Handgelenk im Spiegel. Das wirkt jetzt schon deutlich anders."
+      }
+    }
+  },
+  "kauf_auto": {
+    "startNode": "start",
+    "nodes": {
+      "start": {
+        "typ": "kauf",
+        "text": "Herr Yalcin persoenlich fuehrt Mayo zum gebrauchten Mittelklassewagen. 'Fuer den Anfang reicht das locker, Doc.'",
+        "kaufLabel": "Wagen kaufen",
+        "kaufEmoji": "🚗",
+        "preis": 22000,
+        "itemId": "auto_gebraucht_yalcin",
+        "naechster": "n_ende"
+      },
+      "n_ende": {
+        "typ": "ende",
+        "text": "Der Motor springt beim ersten Versuch an. Mayo faehrt vom Hof - ein kleines Stueck mehr Freiheit in Duesseldorf."
+      }
+    }
+  },
+  "rheinufer_spaziergang": {
+    "startNode": "start",
+    "nodes": {
+      "start": {
+        "typ": "ende",
+        "text": "Der Rhein glitzert im Abendlicht, der Rheinturm ragt in den Himmel. Mayo atmet tief durch - kurz mal keine Kunden, keine Aufgaben, nur der Fluss."
+      }
+    }
+  },
+  "flughafen_blockiert": {
+    "startNode": "start",
+    "nodes": {
+      "start": {
+        "typ": "ende",
+        "text": "Am Check-in-Schalter schuettelt die Dame den Kopf: 'Ihr Auftrag bei Rheinnetz ist doch noch nicht abgeschlossen, oder? Erledigen Sie erst Ihre Aufgaben in Duesseldorf.'"
+      }
+    }
+  }
+}
