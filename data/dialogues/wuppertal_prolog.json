@@ -5,55 +5,40 @@
       "n1": {
         "sprecher": "prof_zdrallek",
         "text": "Nun, Herr Doktor... ja, ich gewoehne mich noch an den Klang. Ihre Verteidigung war beeindruckend – vor allem der Teil, in dem Sie fuenf Minuten lang das Wort 'Systemdienstleistung' benutzt haben, um Zeit zu schinden.",
+        "gespraechsziel": "Zdrallek ist gut gelaunt und moechte Mayo herzlich zur bestandenen Promotion gratulieren. Er macht dazu ein wenig Smalltalk - fragt locker nach Mayos Zukunftsplaenen und dem neuen Job in Duesseldorf, vielleicht mit einem trockenen Seitenhieb auf Unternehmensberater. Nach insgesamt drei Antworten des Spielers soll das Gespraech von selbst zu einem herzlichen, launigen Abschied ueberleiten.",
+        "maxAustausche": 3,
+        "fallback": "Zdrallek nickt zufrieden, wuenscht viel Erfolg in Duesseldorf und verabschiedet sich mit einem Handschlag.",
+        "naechster": "n_feier",
         "optionen": [
           {
             "label": "Ich nenne das strategische Redundanz, Herr Professor.",
-            "effekte": { "reputation": 2 },
-            "naechster": "n2"
+            "effekte": { "reputation": 2 }
           },
           {
             "label": "Ehrlich gesagt hab ich improvisiert.",
-            "effekte": { "reputation": 1, "beziehung:prof_zdrallek": 2 },
-            "naechster": "n2"
+            "effekte": { "reputation": 1, "beziehung:prof_zdrallek": 2 }
           },
           {
             "label": "Wenn ich ehrlich bin, war ich waehrend der Verteidigung leicht angetrunken – hat wohl geholfen.",
-            "effekte": { "reputation": -1, "beziehung:prof_zdrallek": 3 },
-            "naechster": "n2"
+            "effekte": { "reputation": -1, "beziehung:prof_zdrallek": 3 }
           },
           {
             "typ": "freitext",
-            "fallback": "Mayo grinst und murmelt etwas von einem 'ganzheitlichen Ansatz', was niemanden ueberzeugt, aber auch niemanden stoert.",
-            "gespraechsziel": "Zdrallek ist gut gelaunt und moechte Mayo herzlich zur bestandenen Promotion gratulieren. Er macht dazu ein wenig Smalltalk - fragt locker nach Mayos Zukunftsplaenen und dem neuen Job in Duesseldorf, vielleicht mit einem trockenen Seitenhieb auf Unternehmensberater. Nach insgesamt drei Antworten des Spielers soll das Gespraech von selbst zu einem herzlichen, launigen Abschied ueberleiten.",
-            "maxAustausche": 3,
-            "naechster": "n2"
+            "fallback": "Mayo grinst und murmelt etwas von einem 'ganzheitlichen Ansatz', was niemanden ueberzeugt, aber auch niemanden stoert."
           }
         ]
       },
-      "n2": {
-        "sprecher": "ramsi_hartmann",
-        "text": "(SMS) Herr Doktor persoenlich! Die Jungs und ich feiern das heute im Kult – und uebrigens: Morgen frueh geht's fuer dich schon nach Duesseldorf, hab ich gehoert. Also: heute volles Programm, morgen Anzug buegeln.",
-        "optionen": [
-          {
-            "label": "Lieber pack ich schon mal die Koffer, morgen wartet der neue Job.",
-            "effekte": { "reputation": 2, "flag:prolog_seriös": true },
-            "naechster": "n3"
-          },
-          {
-            "label": "Ein Dr. feiert sich nicht selbst, das uebernehmen andere. Bin dabei!",
-            "effekte": { "geld": -30, "beziehung:ramsi_hartmann": 3 },
-            "naechster": "n3"
-          },
-          {
-            "typ": "freitext",
-            "fallback": "Mayo tippt eine wunderbar ausweichende Antwort, die alle Optionen offenlaesst – seine grosse Staerke.",
-            "naechster": "n3"
-          }
-        ]
+      "n_feier": {
+        "typ": "kauf",
+        "text": "Zdrallek verabschiedet sich mit einem letzten Handschlag. Draussen wartet schon die Nacht - und Ramsi hat laengst eine Promotionsfeier organisiert.",
+        "kaufLabel": "Promotionsfeier starten",
+        "kaufEmoji": "🍺",
+        "preis": 1500,
+        "naechster": "n3"
       },
       "n3": {
         "typ": "ende",
-        "text": "Am naechsten Morgen liegt eine E-Mail im Postfach: 'Willkommen an Bord. Ihr erster Einsatz: Duesseldorf, Montag 9 Uhr, der Kunde erwartet Sie.' Mayo packt den Koffer, richtet die Krawatte – und ahnt noch nicht, wie sehr sich Arbeit und Vergnuegen in den naechsten Wochen die Klinke in die Hand geben werden.",
+        "text": "Nach einer durchtanzten Promotionsfeier liegt am naechsten Morgen eine E-Mail im Postfach: 'Willkommen an Bord. Ihr erster Einsatz: Duesseldorf, Montag 9 Uhr, der Kunde erwartet Sie.' Mayo packt den Koffer, richtet die Krawatte - sein Handy vibriert schon wieder, vermutlich Ramsi, der sich fuer die naechste Runde warmschreibt.",
         "onEnde": { "flag:prolog_abgeschlossen": true }
       }
     }

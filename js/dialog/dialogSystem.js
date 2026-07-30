@@ -4,7 +4,7 @@
 // neue Dialoge sind reine Content-Aenderungen in data/dialogues/*.json.
 
 import { getContent, getNpc } from "../state/contentStore.js";
-import { addReputation, addGeld } from "../engine/economy.js";
+import { addReputation, addGeld, spendGeld } from "../engine/economy.js";
 import { changeBeziehungswert } from "../engine/relationships.js";
 import { setFlag } from "../state/gameState.js";
 import { emit } from "../state/eventBus.js";
@@ -40,41 +40,61 @@ function zeigeNode(nodeId) {
   emit("dialog:node", aktiveNode);
 }
 
+// Ein Node mit "gespraechsziel" ist eine mehrstufige KI-Konversation (Kap.
+// 19): JEDE Option (egal ob vorgefertigter Button oder Freitext) startet
+// dieselbe Runden-Schleife, statt einzelne Optionen direkt zum naechsten
+// Node springen zu lassen.
 export function waehleOption(index) {
+  if (aktiveKiKonversation) return;
   const auswahl = aktiveNode.optionen[index];
+  emit("dialog:spieler_nachricht", auswahl.label);
   wendeEffekteAn(auswahl.effekte);
+
+  if (aktiveNode.gespraechsziel) {
+    starteKiKonversation(auswahl.label);
+    return;
+  }
+
   geheWeiterZu(auswahl.naechster);
 }
 
 export async function sendeFreitext(text) {
+  emit("dialog:spieler_nachricht", text);
+
   if (aktiveKiKonversation) {
     await fuehreKiKonversationsRundeAus(text);
     return;
   }
 
-  const freitextOption = aktiveNode.optionen.find((option) => option.typ === "freitext");
-  const npc = getNpc(aktiveNode.sprecher);
-
-  if (freitextOption?.gespraechsziel) {
-    aktiveKiKonversation = {
-      npc,
-      gespraechsziel: freitextOption.gespraechsziel,
-      maxAustausche: freitextOption.maxAustausche ?? 3,
-      aktuelleRunde: 0,
-      naechsterNodeId: freitextOption.naechster,
-      fallback: freitextOption.fallback,
-    };
-    await fuehreKiKonversationsRundeAus(text);
+  if (aktiveNode.gespraechsziel) {
+    await starteKiKonversation(text);
     return;
   }
 
-  // Einweg-Antwort (kein Gespraechsziel hinterlegt): eine Antwort, dann weiter.
+  // Einweg-Antwort (kein Gespraechsziel auf dem Node hinterlegt): eine
+  // Antwort, dann weiter - fuer einfache, nicht-konversationelle Szenen.
+  const freitextOption = aktiveNode.optionen.find((option) => option.typ === "freitext");
+  const npc = getNpc(aktiveNode.sprecher);
   const antwort = await requestAiReply(npc, text, freitextOption?.fallback);
   emit("dialog:ai_antwort", antwort);
   if (npc) {
     changeBeziehungswert(npc.id, antwort.beziehungswertAenderung ?? 0);
   }
   geheWeiterZu(freitextOption?.naechster);
+}
+
+function starteKiKonversation(ersteNachricht) {
+  const npc = getNpc(aktiveNode.sprecher);
+  const freitextOption = aktiveNode.optionen?.find((option) => option.typ === "freitext");
+  aktiveKiKonversation = {
+    npc,
+    gespraechsziel: aktiveNode.gespraechsziel,
+    maxAustausche: aktiveNode.maxAustausche ?? 3,
+    aktuelleRunde: 0,
+    naechsterNodeId: aktiveNode.naechster,
+    fallback: aktiveNode.fallback || freitextOption?.fallback,
+  };
+  return fuehreKiKonversationsRundeAus(ersteNachricht);
 }
 
 // Mehrstufige KI-Konversation (Kap. 19): laeuft bis zu maxAustausche Runden,
@@ -109,6 +129,20 @@ async function fuehreKiKonversationsRundeAus(text) {
 
 export function bestaetigeEnde() {
   beendeDialog();
+}
+
+// Generischer "Kauf"-Node (z. B. Promotionsfeier, spaeter Shop-Items):
+// zieht den Preis vom liquiden Geld ab und geht erst bei Erfolg weiter
+// (Kap. 13 Bankrott-Mechanik - reicht das Geld nicht, bleibt der Spieler
+// auf dem Node stehen).
+export function bestaetigeKauf() {
+  const node = aktiveNode;
+  const erfolgreich = spendGeld(node.preis);
+  if (!erfolgreich) {
+    emit("dialog:kauf_fehlgeschlagen", node.preis);
+    return;
+  }
+  geheWeiterZu(node.naechster);
 }
 
 function geheWeiterZu(naechsterNodeId) {

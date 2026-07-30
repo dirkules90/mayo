@@ -12,7 +12,7 @@ function erzeugeStandardState() {
     aktuellesLevel: "wuppertal_prolog",
     aktuellerTag: 1,
     aktuellerSlot: "vormittag",
-    geld: 1500,
+    geld: 2500,
     vermoegen: 0,
     reputation: 50,
     status: 20,
