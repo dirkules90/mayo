@@ -14,7 +14,7 @@
 
 import { groqProvider } from "./providers/groqProvider.js";
 
-const PROXY_URL = "";
+const PROXY_URL = "https://mayo-ai-proxy.dirk-baumeister.workers.dev/";
 
 export function getProvider() {
   if (!PROXY_URL) {
