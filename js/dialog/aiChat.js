@@ -11,7 +11,7 @@ import { getState, notifyStateChanged } from "../state/gameState.js";
 const STANDARD_FALLBACK = "Mayo nuschelt etwas Unverstaendliches und wechselt schnell das Thema.";
 const MAX_HISTORY_MESSAGES = 10;
 
-export async function requestAiReply(npc, spielerNachricht, fallbackText) {
+export async function requestAiReply(npc, spielerNachricht, fallbackText, konversationsKontext = null) {
   const provider = getProvider();
   if (!provider) {
     return { text: fallbackText || STANDARD_FALLBACK, beziehungswertAenderung: 0, viaFallback: true };
@@ -21,7 +21,7 @@ export async function requestAiReply(npc, spielerNachricht, fallbackText) {
   const historie = state.npcChatHistory[npc.id] ?? [];
 
   try {
-    const antwort = await provider.generateNpcReply({ npc, spielerNachricht, historie });
+    const antwort = await provider.generateNpcReply({ npc, spielerNachricht, historie, konversationsKontext });
     aktualisiereHistorie(npc.id, spielerNachricht, antwort.text);
     return { ...antwort, viaFallback: false };
   } catch (fehler) {

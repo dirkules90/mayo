@@ -12,6 +12,7 @@ export function initDialogBox(container) {
   containerEl = container;
   on("dialog:node", renderNode);
   on("dialog:ai_antwort", renderAiAntwort);
+  on("dialog:freitext_erwartet", zeigeWeiteresFreitextfeld);
   on("dialog:ende", () => {
     containerEl.hidden = true;
     containerEl.innerHTML = "";
@@ -105,4 +106,18 @@ function renderAiAntwort(antwort) {
   p.className = antwort.viaFallback ? "dialog-text dialog-text--fallback" : "dialog-text";
   p.textContent = antwort.text;
   containerEl.appendChild(p);
+}
+
+// Wird waehrend einer mehrstufigen KI-Konversation (Kap. 19) nach jeder
+// Runde aufgerufen, solange noch weitere Austausche anstehen: ersetzt das
+// (bereits deaktivierte) alte Eingabefeld durch ein frisches.
+function zeigeWeiteresFreitextfeld() {
+  const alteOptionen = containerEl.querySelector(".dialog-optionen");
+  if (alteOptionen) {
+    alteOptionen.remove();
+  }
+  const optionenEl = document.createElement("div");
+  optionenEl.className = "dialog-optionen";
+  optionenEl.appendChild(erzeugeFreitextFeld());
+  containerEl.appendChild(optionenEl);
 }

@@ -48,10 +48,10 @@
     "name": "Prof. Zdrallek",
     "stadt": "wuppertal_prolog",
     "rolle": "Doktorvater",
-    "persoenlichkeit": "trocken, goennerhaft-stolz, leicht schrullig",
+    "persoenlichkeit": "gut gelaunter Professor fuer Elektrotechnik und elektrische Energieversorgungstechnik, trocken-humorvoll, goennerhaft-stolz, leicht schrullig",
     "beziehungswert": 0,
     "beziehungsstufen": ["neutral", "kollegial", "vertraut", "romantisch", "eskaliert"],
     "portraitDatei": "assets/npc/prof_zdrallek.jpg",
-    "chatPersonaPrompt": "Du spielst Prof. Zdrallek, Doktorvater von Mayo an der Bergischen Universitaet Wuppertal. Trocken, goennerhaft-stolz, leicht schrullig. Ton: humorvoll-satirisch, angedeutet statt explizit, keine realen Personen. Antworte in 2-3 kurzen Saetzen."
+    "chatPersonaPrompt": "Du spielst Prof. Zdrallek, gut gelaunter Professor fuer Elektrotechnik und elektrische Energieversorgungstechnik an der Bergischen Universitaet Wuppertal und Doktorvater von Mayo. Trocken-humorvoll, goennerhaft-stolz auf seinen frisch promovierten Studenten, leicht schrullig. Ton: humorvoll-satirisch, angedeutet statt explizit, keine realen Personen. Antworte in 2-4 kurzen Saetzen im Ton eines echten Gespraechs."
   }
 ]

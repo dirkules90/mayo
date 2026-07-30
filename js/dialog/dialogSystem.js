@@ -13,6 +13,7 @@ import { requestAiReply } from "./aiChat.js";
 let aktiverBaum = null;
 let aktiveNode = null;
 let onDialogEnde = null;
+let aktiveKiKonversation = null;
 
 export function starteDialog(levelId, baumId, callbackBeiEnde) {
   const dialoge = getContent().dialogues[levelId];
@@ -46,14 +47,64 @@ export function waehleOption(index) {
 }
 
 export async function sendeFreitext(text) {
+  if (aktiveKiKonversation) {
+    await fuehreKiKonversationsRundeAus(text);
+    return;
+  }
+
   const freitextOption = aktiveNode.optionen.find((option) => option.typ === "freitext");
   const npc = getNpc(aktiveNode.sprecher);
+
+  if (freitextOption?.gespraechsziel) {
+    aktiveKiKonversation = {
+      npc,
+      gespraechsziel: freitextOption.gespraechsziel,
+      maxAustausche: freitextOption.maxAustausche ?? 3,
+      aktuelleRunde: 0,
+      naechsterNodeId: freitextOption.naechster,
+      fallback: freitextOption.fallback,
+    };
+    await fuehreKiKonversationsRundeAus(text);
+    return;
+  }
+
+  // Einweg-Antwort (kein Gespraechsziel hinterlegt): eine Antwort, dann weiter.
   const antwort = await requestAiReply(npc, text, freitextOption?.fallback);
   emit("dialog:ai_antwort", antwort);
   if (npc) {
     changeBeziehungswert(npc.id, antwort.beziehungswertAenderung ?? 0);
   }
   geheWeiterZu(freitextOption?.naechster);
+}
+
+// Mehrstufige KI-Konversation (Kap. 19): laeuft bis zu maxAustausche Runden,
+// bevor sie natuerlich zum naechsten Dialog-Node ueberleitet. Bricht bei
+// einem Fallback (KI nicht erreichbar) sofort ab, statt denselben
+// statischen Text mehrfach zu wiederholen.
+async function fuehreKiKonversationsRundeAus(text) {
+  const konversation = aktiveKiKonversation;
+  konversation.aktuelleRunde += 1;
+  const istLetzteRunde = konversation.aktuelleRunde >= konversation.maxAustausche;
+
+  const antwort = await requestAiReply(konversation.npc, text, konversation.fallback, {
+    gespraechsziel: konversation.gespraechsziel,
+    aktuelleRunde: konversation.aktuelleRunde,
+    maxAustausche: konversation.maxAustausche,
+    istLetzteRunde,
+  });
+
+  emit("dialog:ai_antwort", antwort);
+  if (konversation.npc) {
+    changeBeziehungswert(konversation.npc.id, antwort.beziehungswertAenderung ?? 0);
+  }
+
+  if (istLetzteRunde || antwort.viaFallback) {
+    const naechsterNodeId = konversation.naechsterNodeId;
+    aktiveKiKonversation = null;
+    geheWeiterZu(naechsterNodeId);
+  } else {
+    emit("dialog:freitext_erwartet");
+  }
 }
 
 export function bestaetigeEnde() {
@@ -87,6 +138,7 @@ function beendeDialog() {
   aktiverBaum = null;
   aktiveNode = null;
   onDialogEnde = null;
+  aktiveKiKonversation = null;
   emit("dialog:ende");
   if (callback) callback();
 }

@@ -24,6 +24,8 @@
           {
             "typ": "freitext",
             "fallback": "Mayo grinst und murmelt etwas von einem 'ganzheitlichen Ansatz', was niemanden ueberzeugt, aber auch niemanden stoert.",
+            "gespraechsziel": "Zdrallek ist gut gelaunt und moechte Mayo herzlich zur bestandenen Promotion gratulieren. Er macht dazu ein wenig Smalltalk - fragt locker nach Mayos Zukunftsplaenen und dem neuen Job in Duesseldorf, vielleicht mit einem trockenen Seitenhieb auf Unternehmensberater. Nach insgesamt drei Antworten des Spielers soll das Gespraech von selbst zu einem herzlichen, launigen Abschied ueberleiten.",
+            "maxAustausche": 3,
             "naechster": "n2"
           }
         ]

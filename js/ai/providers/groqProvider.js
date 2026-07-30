@@ -4,12 +4,12 @@
 
 export function groqProvider(proxyUrl) {
   return {
-    async generateNpcReply({ npc, spielerNachricht, historie = [] }) {
+    async generateNpcReply({ npc, spielerNachricht, historie = [], konversationsKontext = null }) {
       const response = await fetch(proxyUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          systemPrompt: baueSystemPrompt(npc),
+          systemPrompt: baueSystemPrompt(npc, konversationsKontext),
           history: historie,
           userMessage: spielerNachricht,
         }),
@@ -28,6 +28,17 @@ export function groqProvider(proxyUrl) {
   };
 }
 
-function baueSystemPrompt(npc) {
-  return `${npc.chatPersonaPrompt}\n\nGib am Ende deiner Antwort zusaetzlich ein JSON-Objekt zurueck mit dem Feld "beziehungswert_aenderung" (Zahl zwischen -5 und 5), das widerspiegelt, wie die Nachricht des Spielers die Beziehung veraendert.`;
+function baueSystemPrompt(npc, konversationsKontext) {
+  let prompt = npc.chatPersonaPrompt;
+
+  if (konversationsKontext) {
+    const { gespraechsziel, aktuelleRunde, maxAustausche, istLetzteRunde } = konversationsKontext;
+    prompt += `\n\nGespraechsziel dieser Szene: ${gespraechsziel}\nDies ist Austausch ${aktuelleRunde} von ${maxAustausche}.`;
+    if (istLetzteRunde) {
+      prompt += " Dies ist der letzte Austausch - leite jetzt natuerlich zu einem Abschluss/Abschied ueber.";
+    }
+  }
+
+  prompt += `\n\nGib am Ende deiner Antwort zusaetzlich ein JSON-Objekt zurueck mit dem Feld "beziehungswert_aenderung" (Zahl zwischen -5 und 5), das widerspiegelt, wie die Nachricht des Spielers die Beziehung veraendert.`;
+  return prompt;
 }
