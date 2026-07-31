@@ -23,6 +23,7 @@ export function groqProvider(proxyUrl) {
       return {
         text: data.text,
         beziehungswertAenderung: data.beziehungswertAenderung ?? 0,
+        vorschlaege: Array.isArray(data.vorschlaege) ? data.vorschlaege.slice(0, 2) : [],
       };
     },
   };
@@ -45,6 +46,11 @@ function baueSystemPrompt(npc, konversationsKontext) {
     }
   }
 
-  prompt += `\n\nGib am Ende deiner Antwort zusaetzlich ein JSON-Objekt zurueck mit dem Feld "beziehungswert_aenderung" (Zahl zwischen -5 und 5), das widerspiegelt, wie die Nachricht des Spielers die Beziehung veraendert.`;
+  prompt +=
+    `\n\nGib am Ende deiner Antwort zusaetzlich ein JSON-Objekt zurueck mit den Feldern ` +
+    `"beziehungswert_aenderung" (Zahl zwischen -5 und 5, wie die Nachricht des Spielers die Beziehung veraendert) ` +
+    `und "vorschlaege" (Array mit genau 2 kurzen, unterschiedlichen moeglichen Antworten des Spielers auf DEINE ` +
+    `gerade gegebene Antwort, je maximal 8 Woerter, die zum Gespraechsziel passen - der Spieler kann stattdessen ` +
+    `aber auch frei etwas Eigenes eintippen).`;
   return prompt;
 }

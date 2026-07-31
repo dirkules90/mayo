@@ -68,17 +68,20 @@ export default {
 
     const data = await groqResponse.json();
     const rawText = data.choices?.[0]?.message?.content ?? "";
-    const { text, beziehungswertAenderung } = parseStructuredReply(rawText);
+    const { text, beziehungswertAenderung, vorschlaege } = parseStructuredReply(rawText);
 
-    return jsonResponse({ text, beziehungswertAenderung }, 200, origin);
+    return jsonResponse({ text, beziehungswertAenderung, vorschlaege }, 200, origin);
   },
 };
 
 // Entfernt Markdown-Codeblock-Fences und extrahiert das optionale
-// abschliessende JSON-Objekt mit "beziehungswert_aenderung" (Kap. 19.4/22.3).
+// abschliessende JSON-Objekt mit "beziehungswert_aenderung" und "vorschlaege"
+// (Kap. 19.4/22.3, sowie Nutzer-Wunsch nach Antwort-Vorschlaegen in jeder
+// Gespraechsrunde, nicht nur der ersten).
 function parseStructuredReply(rawText) {
   const jsonMatch = rawText.match(/\{[^{}]*"beziehungswert_aenderung"[^{}]*\}/);
   let beziehungswertAenderung = 0;
+  let vorschlaege = [];
   let text = rawText;
 
   if (jsonMatch) {
@@ -87,13 +90,16 @@ function parseStructuredReply(rawText) {
       if (typeof parsed.beziehungswert_aenderung === "number") {
         beziehungswertAenderung = Math.max(-5, Math.min(5, parsed.beziehungswert_aenderung));
       }
+      if (Array.isArray(parsed.vorschlaege)) {
+        vorschlaege = parsed.vorschlaege.filter((v) => typeof v === "string").slice(0, 2);
+      }
     } catch {
-      // ungueltiges JSON im Modell-Output - Fallback bleibt 0
+      // ungueltiges JSON im Modell-Output - Fallback bleibt leer
     }
     text = rawText.slice(0, jsonMatch.index).trim();
   }
 
-  return { text: text.replace(/```json|```/g, "").trim(), beziehungswertAenderung };
+  return { text: text.replace(/```json|```/g, "").trim(), beziehungswertAenderung, vorschlaege };
 }
 
 function corsHeaders(origin) {

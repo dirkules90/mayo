@@ -8,6 +8,7 @@ import { on } from "./state/eventBus.js";
 import { initStartScreen } from "./ui/screens/startScreen.js";
 import { initSceneScreen, zeigeLocation } from "./ui/screens/sceneScreen.js";
 import { initMapScreen, zeigeKarte, versteckeKarte } from "./ui/screens/mapScreen.js";
+import { starteDialog } from "./dialog/dialogSystem.js";
 import { initStatusPanel } from "./ui/screens/statusPanel.js";
 import { initCompletionScreen } from "./ui/screens/completionScreen.js";
 import { initDialogBox } from "./ui/components/dialogBox.js";
@@ -39,10 +40,17 @@ async function main() {
   initQuizOverlay(quizOverlayEl);
   const zeigeCompletion = initCompletionScreen(completionScreenEl);
 
-  initMapScreen(mapScreenEl, (locationId) => {
-    versteckeKarte();
-    zeigeLocation(locationId);
-  });
+  initMapScreen(
+    mapScreenEl,
+    (locationId) => {
+      versteckeKarte();
+      zeigeLocation(locationId);
+    },
+    (dialogId) => {
+      const state = getState();
+      starteDialog(state.aktuellesLevel, dialogId, () => {});
+    }
+  );
 
   phoneIconBtn.addEventListener("click", () => oeffnePhone());
 

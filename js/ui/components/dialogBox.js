@@ -101,13 +101,31 @@ function erzeugeFreitextFeld() {
     event.preventDefault();
     const text = input.value.trim();
     if (!text) return;
-    sendeFreitext(text);
-    input.value = "";
-    input.disabled = true;
-    submit.disabled = true;
+    versendeUndSperre(wrapper, text);
   });
 
   return wrapper;
+}
+
+// Sperrt Freitextfeld UND eventuell vorhandene Vorschlag-Buttons gemeinsam,
+// damit waehrend einer laufenden KI-Antwort keine Doppel-Eingabe moeglich ist.
+function versendeUndSperre(gruppenEl, text) {
+  sendeFreitext(text);
+  gruppenEl.parentElement?.querySelectorAll("button, input").forEach((el) => {
+    el.disabled = true;
+  });
+}
+
+// KI-generierte Antwort-Vorschlaege (Nutzer-Wunsch: nicht nur bei der ersten
+// Gespraechsrunde, sondern in JEDER Runde 1-2 Auswahlmoeglichkeiten anbieten,
+// zusaetzlich zum freien Eintippen).
+function erzeugeVorschlagButton(text) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "dialog-vorschlag-btn";
+  btn.textContent = text;
+  btn.addEventListener("click", () => versendeUndSperre(btn, text));
+  return btn;
 }
 
 // Generischer Kauf-Button (Kap. 16/32-Vorlage): Emoji + Label oben,
@@ -163,13 +181,16 @@ function renderAiAntwort(antwort) {
 // Runde aufgerufen, solange noch weitere Austausche anstehen: ersetzt das
 // (bereits deaktivierte) alte Eingabefeld durch ein frisches, ohne den
 // bisherigen Chatverlauf zu loeschen.
-function zeigeWeiteresFreitextfeld() {
+function zeigeWeiteresFreitextfeld(vorschlaege = []) {
   const alteOptionen = containerEl.querySelector(".dialog-optionen");
   if (alteOptionen) {
     alteOptionen.remove();
   }
   const optionenEl = document.createElement("div");
   optionenEl.className = "dialog-optionen";
+  vorschlaege.forEach((vorschlag) => {
+    optionenEl.appendChild(erzeugeVorschlagButton(vorschlag));
+  });
   optionenEl.appendChild(erzeugeFreitextFeld());
   containerEl.appendChild(optionenEl);
 }

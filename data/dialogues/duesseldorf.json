@@ -63,6 +63,47 @@
       }
     }
   },
+  "ramsi_strassentreffen": {
+    "startNode": "n1",
+    "nodes": {
+      "n1": {
+        "sprecher": "ramsi_hartmann",
+        "text": "Da bist du ja! Ich hab dir schon eine Liste von Orten zusammengestellt, an denen man in Duesseldorf gesehen werden muss. Netzwerken, mein Lieber, Netzwerken!",
+        "gespraechsziel": "Ramsi ist grossspurig-locker und will Mayo zeigen, wie man sich in Duesseldorf einlebt. Nach insgesamt drei Antworten des Spielers soll er launig vorschlagen, sich spaeter noch mal zu treffen.",
+        "maxAustausche": 3,
+        "fallback": "Ramsi grinst und klopft Mayo aufmunternd auf die Schulter.",
+        "naechster": "n_ende",
+        "optionen": [
+          {
+            "label": "Erst mal ankommen, Ramsi - eins nach dem anderen.",
+            "effekte": { "beziehung:ramsi_hartmann": 1 }
+          },
+          {
+            "label": "Zeig mir, wo hier das Leben spielt.",
+            "effekte": { "beziehung:ramsi_hartmann": 2 }
+          },
+          {
+            "typ": "freitext",
+            "fallback": "Mayo lacht und laesst sich von Ramsis Energie anstecken."
+          }
+        ]
+      },
+      "n_ende": {
+        "typ": "ende",
+        "text": "Ramsi zwinkert. 'Wir sehen uns, Herr Doktor. Duesseldorf wartet nicht.'",
+        "onEnde": { "kontakt:ramsi_hartmann": true }
+      }
+    }
+  },
+  "altstadt_bar_atmosphaere": {
+    "startNode": "start",
+    "nodes": {
+      "start": {
+        "typ": "ende",
+        "text": "Gedaempftes Licht, Barmusik, das Klirren von Glaesern. Ein guter Ort, um spaeter mit jemandem herzukommen - gerade ist niemand Bekanntes hier."
+      }
+    }
+  },
   "kauf_uhr_einstieg": {
     "startNode": "start",
     "nodes": {

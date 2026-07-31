@@ -59,27 +59,42 @@
         "gggggggggggggggggggggwgg",
         "gggggggggggggggggggggggg"
       ],
+      "blockierteTiles": ["r"],
       "landmarks": [
-        { "id": "hotel", "name": "Hotel", "gebaeude": "assets/buildings/hotel_building.jpg", "position": { "x": 3, "y": 12 }, "ziel": "hotel" },
-        { "id": "buero", "name": "Buero des Kunden", "gebaeude": "assets/buildings/office_tower.jpg", "position": { "x": 18, "y": 3 }, "ziel": "buero_kunde" },
-        { "id": "altstadt", "name": "Altstadt-Bar", "gebaeude": "assets/buildings/bar_building.jpg", "position": { "x": 9, "y": 9 }, "ziel": "altstadt_bar" },
-        { "id": "zeitwerk", "name": "Zeitwerk Duesseldorf", "gebaeude": "assets/buildings/shop_building.jpg", "position": { "x": 14, "y": 11 }, "ziel": "shop_zeitwerk" },
-        { "id": "autohaendler", "name": "Deniz Yalcin Automobile", "gebaeude": "assets/buildings/car_dealership.jpg", "position": { "x": 20, "y": 11 }, "ziel": "autohaendler" },
+        { "id": "hotel", "name": "Hotel", "bauTyp": "hotel", "position": { "x": 3, "y": 12 }, "ziel": "hotel" },
+        { "id": "buero", "name": "Buero des Kunden", "bauTyp": "buero", "position": { "x": 18, "y": 3 }, "ziel": "buero_kunde" },
+        { "id": "altstadt", "name": "Altstadt-Bar", "bauTyp": "bar", "position": { "x": 9, "y": 9 }, "ziel": "altstadt_bar" },
+        { "id": "zeitwerk", "name": "Zeitwerk Duesseldorf", "bauTyp": "shop", "position": { "x": 14, "y": 11 }, "ziel": "shop_zeitwerk" },
+        { "id": "autohaendler", "name": "Deniz Yalcin Automobile", "bauTyp": "autohaendler", "position": { "x": 20, "y": 11 }, "ziel": "autohaendler" },
         { "id": "rheinufer", "name": "Rheinufer", "emoji": "🌊", "position": { "x": 4, "y": 4 }, "ziel": "rheinufer" },
-        { "id": "flughafen", "name": "Flughafen", "gebaeude": "assets/buildings/airport_building.jpg", "position": { "x": 21, "y": 14 }, "ziel": "flughafen" }
+        { "id": "flughafen", "name": "Flughafen", "bauTyp": "flughafen", "position": { "x": 21, "y": 14 }, "ziel": "flughafen" }
+      ],
+      "npcs": [
+        { "id": "npc_ramsi", "npcId": "ramsi_hartmann", "name": "Ramsi", "position": { "x": 5, "y": 12 }, "ziel": "ramsi_strassentreffen" },
+        { "id": "npc_kevin", "npcId": "kevin_brandt", "name": "Kevin", "position": { "x": 11, "y": 9 }, "ziel": "kevin_erstkontakt" }
       ],
       "dekorationen": [
-        { "gebaeude": "assets/buildings/house_a.jpg", "position": { "x": 6, "y": 6 } },
-        { "gebaeude": "assets/buildings/house_b.jpg", "position": { "x": 11, "y": 5 } },
-        { "gebaeude": "assets/buildings/shop_building.jpg", "position": { "x": 16, "y": 7 } },
-        { "gebaeude": "assets/buildings/house_a.jpg", "position": { "x": 7, "y": 13 } },
-        { "gebaeude": "assets/buildings/house_b.jpg", "position": { "x": 13, "y": 4 } },
-        { "gebaeude": "assets/buildings/house_a.jpg", "position": { "x": 19, "y": 8 } },
-        { "gebaeude": "assets/buildings/house_b.jpg", "position": { "x": 5, "y": 10 } },
-        { "gebaeude": "assets/buildings/house_a.jpg", "position": { "x": 22, "y": 5 } },
+        { "bauTyp": "haus_a", "position": { "x": 6, "y": 6 } },
+        { "bauTyp": "haus_b", "position": { "x": 11, "y": 5 } },
+        { "bauTyp": "shop", "position": { "x": 16, "y": 7 } },
+        { "bauTyp": "haus_a", "position": { "x": 7, "y": 13 } },
+        { "bauTyp": "haus_b", "position": { "x": 13, "y": 4 } },
+        { "bauTyp": "haus_a", "position": { "x": 19, "y": 8 } },
+        { "bauTyp": "haus_b", "position": { "x": 5, "y": 10 } },
+        { "bauTyp": "haus_a", "position": { "x": 22, "y": 5 } },
+        { "bauTyp": "haus_a", "position": { "x": 2, "y": 7 } },
+        { "bauTyp": "haus_b", "position": { "x": 10, "y": 3 } },
+        { "bauTyp": "haus_a", "position": { "x": 17, "y": 13 } },
+        { "bauTyp": "haus_b", "position": { "x": 12, "y": 13 } },
+        { "bauTyp": "haus_a", "position": { "x": 18, "y": 7 } },
         { "emoji": "🌳", "position": { "x": 8, "y": 4 } },
         { "emoji": "🌳", "position": { "x": 17, "y": 9 } },
-        { "emoji": "🌳", "position": { "x": 2, "y": 14 } }
+        { "emoji": "🌳", "position": { "x": 2, "y": 14 } },
+        { "emoji": "🌳", "position": { "x": 4, "y": 9 } },
+        { "emoji": "🌳", "position": { "x": 22, "y": 10 } },
+        { "emoji": "🌳", "position": { "x": 6, "y": 14 } },
+        { "emoji": "🚦", "position": { "x": 9, "y": 12 } },
+        { "emoji": "🪑", "position": { "x": 15, "y": 5 } }
       ]
     },
     "locations": {
@@ -109,11 +124,11 @@
         "background": "assets/backgrounds/duesseldorf_altstadt_bar.jpg",
         "hotspots": [
           {
-            "id": "kevin_treffen",
+            "id": "bar_atmosphaere",
             "typ": "dialog",
-            "label": "Den Typen an der Bar ansprechen",
+            "label": "Die Bar erkunden",
             "position": { "x": 50, "y": 55 },
-            "ziel": "kevin_erstkontakt"
+            "ziel": "altstadt_bar_atmosphaere"
           },
           { "id": "zur_karte", "typ": "karte", "label": "Zurueck zur Stadt", "position": { "x": 50, "y": 90 } }
         ]

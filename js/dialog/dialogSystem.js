@@ -124,7 +124,7 @@ async function fuehreKiKonversationsRundeAus(text) {
     aktiveKiKonversation = null;
     geheWeiterZu(naechsterNodeId);
   } else {
-    emit("dialog:freitext_erwartet");
+    emit("dialog:freitext_erwartet", antwort.vorschlaege ?? []);
   }
 }
 
