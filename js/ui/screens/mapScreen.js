@@ -1,10 +1,11 @@
-// Begehbare Stadtkarte im Pokemon-Stil (Nutzer-Wunsch: "wie bei Pokemon
-// Blau und Rot, in Farbe"): echtes Kachel-Raster aus Terrain-Tiles (Gras/
-// Weg/Wasser) statt eines einzelnen gemalten Panoramabilds, darauf Mayo
-// als Token per Pfeiltasten beweglich. Landmarks sind zusaetzlich direkt
-// anklickbar (schnellerer Zugriff, kein exaktes "Draufsteppen" noetig).
-// Betreten eines Landmarks fuehrt in die bestehende Szenen-Hotspot-Ansicht
-// (sceneScreen.js) fuer diese Location.
+// Begehbare Stadtkarte im Pokemon-Stil (Nutzer-Wunsch: "wie beim alten
+// Pokemon, mit Kamera die mitscrollt"). Die Kachel-Welt ist groesser als
+// der sichtbare Ausschnitt; eine "Kamera" folgt Mayo und scrollt die Welt
+// per CSS-Transform, begrenzt an den Kartenraendern - genau wie im
+// Game-Boy-Original. Steuerung per Pfeiltasten UND per Touch-D-Pad
+// (Pfeiltasten allein funktionieren auf Handys ohne Tastatur nicht).
+// Landmarks sind zusaetzlich direkt anklickbar. Betreten eines Landmarks
+// fuehrt in die bestehende Szenen-Hotspot-Ansicht (sceneScreen.js).
 
 import { getLevel } from "../../state/contentStore.js";
 import { getState, notifyStateChanged } from "../../state/gameState.js";
@@ -12,6 +13,7 @@ import { getState, notifyStateChanged } from "../../state/gameState.js";
 let containerEl = null;
 let onLandmarkBetreten = null;
 let tastaturHandler = null;
+let aktuelleKarte = null;
 
 export function initMapScreen(container, callbackBeiLandmarkBetreten) {
   containerEl = container;
@@ -21,6 +23,7 @@ export function initMapScreen(container, callbackBeiLandmarkBetreten) {
 export function zeigeKarte(levelId) {
   const level = getLevel(levelId);
   const karte = level.karte;
+  aktuelleKarte = karte;
 
   const state = getState();
   if (!state.kartenPosition || state.kartenPosition.levelId !== levelId) {
@@ -42,6 +45,15 @@ function render(level, karte, state) {
   containerEl.innerHTML = "";
   containerEl.className = `map-screen theme-${level.id}`;
 
+  const viewport = document.createElement("div");
+  viewport.className = "map-viewport";
+  viewport.style.aspectRatio = `${karte.sichtbarBreiteInTiles} / ${karte.sichtbarHoeheInTiles}`;
+
+  const world = document.createElement("div");
+  world.className = "map-world";
+  world.style.width = `${(karte.breiteInTiles / karte.sichtbarBreiteInTiles) * 100}%`;
+  world.style.height = `${(karte.hoeheInTiles / karte.sichtbarHoeheInTiles) * 100}%`;
+
   const terrain = document.createElement("div");
   terrain.className = "map-terrain";
   terrain.style.gridTemplateColumns = `repeat(${karte.breiteInTiles}, 1fr)`;
@@ -57,10 +69,27 @@ function render(level, karte, state) {
       terrain.appendChild(tile);
     }
   }
-  containerEl.appendChild(terrain);
+  world.appendChild(terrain);
 
   const layer = document.createElement("div");
   layer.className = "map-layer";
+
+  for (const dekoration of karte.dekorationen ?? []) {
+    const el = document.createElement("div");
+    el.className = "map-dekoration";
+    el.style.left = `${((dekoration.position.x + 0.5) / karte.breiteInTiles) * 100}%`;
+    el.style.top = `${((dekoration.position.y + 0.5) / karte.hoeheInTiles) * 100}%`;
+    if (dekoration.gebaeude) {
+      const bild = document.createElement("img");
+      bild.className = "map-dekoration-gebaeude";
+      bild.src = dekoration.gebaeude;
+      bild.alt = "";
+      el.appendChild(bild);
+    } else {
+      el.textContent = dekoration.emoji;
+    }
+    layer.appendChild(el);
+  }
 
   for (const landmark of karte.landmarks) {
     const btn = document.createElement("button");
@@ -68,14 +97,23 @@ function render(level, karte, state) {
     btn.style.left = `${((landmark.position.x + 0.5) / karte.breiteInTiles) * 100}%`;
     btn.style.top = `${((landmark.position.y + 0.5) / karte.hoeheInTiles) * 100}%`;
 
-    const emoji = document.createElement("span");
-    emoji.className = "map-landmark-emoji";
-    emoji.textContent = landmark.emoji;
+    if (landmark.gebaeude) {
+      const bild = document.createElement("img");
+      bild.className = "map-landmark-gebaeude";
+      bild.src = landmark.gebaeude;
+      bild.alt = landmark.name;
+      btn.appendChild(bild);
+    } else {
+      const emoji = document.createElement("span");
+      emoji.className = "map-landmark-emoji";
+      emoji.textContent = landmark.emoji;
+      btn.appendChild(emoji);
+    }
+
     const label = document.createElement("span");
     label.className = "map-landmark-label";
     label.textContent = landmark.name;
-
-    btn.append(emoji, label);
+    btn.appendChild(label);
     btn.addEventListener("click", () => onLandmarkBetreten?.(landmark.ziel));
     layer.appendChild(btn);
   }
@@ -87,12 +125,17 @@ function render(level, karte, state) {
   positioniereMayoToken(mayoToken, karte, state);
   layer.appendChild(mayoToken);
 
-  containerEl.appendChild(layer);
+  world.appendChild(layer);
+  viewport.appendChild(world);
+  containerEl.appendChild(viewport);
+  aktualisiereKamera(world, karte, state);
 
   const hinweis = document.createElement("p");
   hinweis.className = "map-hinweis";
-  hinweis.textContent = "Mit den Pfeiltasten laufen oder direkt auf einen Ort klicken.";
+  hinweis.textContent = "Pfeiltasten oder D-Pad zum Laufen, oder direkt auf einen Ort klicken.";
   containerEl.appendChild(hinweis);
+
+  containerEl.appendChild(erzeugeDpad(karte));
 }
 
 function positioniereMayoToken(el, karte, state) {
@@ -100,7 +143,66 @@ function positioniereMayoToken(el, karte, state) {
   el.style.top = `${((state.kartenPosition.y + 0.5) / karte.hoeheInTiles) * 100}%`;
 }
 
-function aktiviereTastatur(karte) {
+// Kamera folgt Mayo, bleibt aber innerhalb der Kartengrenzen stehen
+// (klassisches Game-Boy-Verhalten: Spieler kann nahe am Rand aus der Mitte
+// wandern, die Kamera scrollt aber nicht ueber die Karte hinaus).
+function berechneKameraPosition(karte, state) {
+  const halbBreite = karte.sichtbarBreiteInTiles / 2;
+  const halbHoehe = karte.sichtbarHoeheInTiles / 2;
+  let camX = state.kartenPosition.x + 0.5 - halbBreite;
+  let camY = state.kartenPosition.y + 0.5 - halbHoehe;
+  camX = Math.max(0, Math.min(karte.breiteInTiles - karte.sichtbarBreiteInTiles, camX));
+  camY = Math.max(0, Math.min(karte.hoeheInTiles - karte.sichtbarHoeheInTiles, camY));
+  return { camX, camY };
+}
+
+function aktualisiereKamera(world, karte, state) {
+  const { camX, camY } = berechneKameraPosition(karte, state);
+  const verschiebungX = (camX / karte.breiteInTiles) * 100;
+  const verschiebungY = (camY / karte.hoeheInTiles) * 100;
+  world.style.transform = `translate(${-verschiebungX}%, ${-verschiebungY}%)`;
+}
+
+function bewege(dx, dy) {
+  if (!aktuelleKarte) return;
+  const karte = aktuelleKarte;
+  const state = getState();
+  const pos = state.kartenPosition;
+  pos.x = Math.max(0, Math.min(karte.breiteInTiles - 1, pos.x + dx));
+  pos.y = Math.max(0, Math.min(karte.hoeheInTiles - 1, pos.y + dy));
+
+  const mayoToken = containerEl.querySelector(".map-mayo-token");
+  const world = containerEl.querySelector(".map-world");
+  if (mayoToken) positioniereMayoToken(mayoToken, karte, state);
+  if (world) aktualisiereKamera(world, karte, state);
+
+  notifyStateChanged();
+}
+
+function erzeugeDpad() {
+  const dpad = document.createElement("div");
+  dpad.className = "map-dpad";
+
+  const RICHTUNGEN = [
+    { klasse: "map-dpad-up", label: "↑", dx: 0, dy: -1 },
+    { klasse: "map-dpad-left", label: "←", dx: -1, dy: 0 },
+    { klasse: "map-dpad-right", label: "→", dx: 1, dy: 0 },
+    { klasse: "map-dpad-down", label: "↓", dx: 0, dy: 1 },
+  ];
+
+  RICHTUNGEN.forEach(({ klasse, label, dx, dy }) => {
+    const btn = document.createElement("button");
+    btn.className = `map-dpad-btn ${klasse}`;
+    btn.type = "button";
+    btn.textContent = label;
+    btn.addEventListener("click", () => bewege(dx, dy));
+    dpad.appendChild(btn);
+  });
+
+  return dpad;
+}
+
+function aktiviereTastatur() {
   deaktiviereTastatur();
   tastaturHandler = (event) => {
     const RICHTUNGEN = {
@@ -112,17 +214,7 @@ function aktiviereTastatur(karte) {
     const richtung = RICHTUNGEN[event.key];
     if (!richtung) return;
     event.preventDefault();
-
-    const state = getState();
-    const pos = state.kartenPosition;
-    pos.x = Math.max(0, Math.min(karte.breiteInTiles - 1, pos.x + richtung[0]));
-    pos.y = Math.max(0, Math.min(karte.hoeheInTiles - 1, pos.y + richtung[1]));
-
-    const mayoToken = containerEl.querySelector(".map-mayo-token");
-    if (mayoToken) {
-      positioniereMayoToken(mayoToken, karte, state);
-    }
-    notifyStateChanged();
+    bewege(richtung[0], richtung[1]);
   };
   window.addEventListener("keydown", tastaturHandler);
 }
